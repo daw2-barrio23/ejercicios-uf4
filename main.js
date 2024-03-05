@@ -9,7 +9,7 @@ fetch('https://jsonplaceholder.typicode.com/users')
         usuarios.slice(0, 5).forEach(usuarios => {
             const row = document.createElement('tr')
             row.innerHTML = `
-            <td>${usuarios.id}</td>
+            <td id="cogerId">${usuarios.id}</td>
             <td>${usuarios.name.split(' ')[0]}</td>
             <td>${usuarios.name.split(' ')[1]}</td>
             <td>${usuarios.email}</td>`;
@@ -22,4 +22,10 @@ fetch('https://jsonplaceholder.typicode.com/users')
 
     })
     .catch(error => console.error('Error'))
-//function usuarios(){}
+//ejercicio 1.2
+
+
+document.getElementById('meteDatos').addEventListener('click',(e)=>{
+    console.log('has hecho click')
+    console.log(e.target)
+})
