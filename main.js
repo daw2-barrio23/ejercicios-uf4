@@ -14,7 +14,8 @@ fetch('https://jsonplaceholder.typicode.com/users')
             <td>${usuarios.name.split(' ')[1]}</td>
             <td>${usuarios.email}</td>`;
 
-            console.log(usuarios)
+            console.log(`id: ${usuarios.id},` , `nombre: ${usuarios.name},`, `email: ${usuarios.email}`)
+            
             tabla.appendChild(row)
             
         });
