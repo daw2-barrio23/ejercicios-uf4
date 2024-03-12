@@ -31,7 +31,12 @@ fetch('https://jsonplaceholder.typicode.com/users')
     })
     .catch(error => console.error('Error'));
 
-    //Ejercicio 1.2
+//ejercicio 1.2
+document.getElementById('meteDatos').addEventListener('click',(e)=>{
+    console.log('has hecho click')
+    console.log(e.target)
+})
+//Ejercicio 1.2
 function mostrarFicha(usuario) {
     // Supongamos que tienes un div con id 'fichaUsuario' para mostrar los datos del usuario
     const ficha = document.getElementById('fichaUsuario');
