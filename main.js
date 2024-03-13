@@ -48,7 +48,17 @@ function mostrarFicha(usuario) {
         <p><strong>Empresa:</strong> ${usuario.company.name}</p>
         <p><strong>Dirección:</strong> ${usuario.address.street}, ${usuario.address.suite}, ${usuario.address.city}</p>
         <p><strong>Código Postal:</strong> ${usuario.address.zipcode}</p>
-        <p><strong>Website:</strong> ${usuario.website}</p>
+        <a><strong>Website:</strong> ${usuario.website}</a>
     `;
 }
 
+fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(resp => resp.json())
+    .then(posts => {
+        const primeros5Posts = posts.slice(0, 5);
+        console.log('Primeros 5 posts:', primeros5Posts);
+    })
+    .catch(error => console.error('Error:', error));
+
+        
+            
