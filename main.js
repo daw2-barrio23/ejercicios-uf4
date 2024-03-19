@@ -38,7 +38,6 @@ document.getElementById('meteDatos').addEventListener('click',(e)=>{
 })
 //Ejercicio 1.2
 function mostrarFicha(usuario) {
-    // Supongamos que tienes un div con id 'fichaUsuario' para mostrar los datos del usuario
     const ficha = document.getElementById('fichaUsuario');
     ficha.innerHTML = `
         <h2>Información del Usuario</h2>
@@ -50,15 +49,51 @@ function mostrarFicha(usuario) {
         <p><strong>Código Postal:</strong> ${usuario.address.zipcode}</p>
         <a><strong>Website:</strong> ${usuario.website}</a>
     `;
+
+    fetch(`https://jsonplaceholder.typicode.com/posts?userId=${usuario.id}`)
+        .then(resp => resp.json())
+        .then(posts => {
+            const ultimos5Posts = posts.slice(-5);
+            const postList = document.getElementById('postList');
+            postList.innerHTML = '';
+
+            if (ultimos5Posts.length > 0) {
+                ultimos5Posts.forEach(post => {
+                    postList.innerHTML += `
+                        <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
+                            <p><strong>ID:</strong> ${post.id}</p>
+                            <p><strong>Título:</strong> ${post.title}</p>
+                            <p><strong>Cuerpo:</strong> ${post.body}</p>
+                        </div>
+                    `;
+
+                    // Obtener los comentarios asociados a este post
+                    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${post.id}`)
+                        .then(resp => resp.json())
+                        .then(comments => {
+                            const comentariosPost = document.getElementById('comentariosPost');
+                            comentariosPost.innerHTML = '';
+
+                            if (comments.length > 0) {
+                                
+                                comments.forEach(comment => {
+                                    comentariosPost.innerHTML += `
+                                        <div style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
+                                            <p><strong>Nombre:</strong> ${comment.name}</p>
+                                            <p><strong>Email:</strong> ${comment.email}</p>
+                                            <p><strong>Cuerpo:</strong> ${comment.body}</p>
+                                        </div>
+                                    `;
+                                });
+                            } else {
+                                comentariosPost.innerHTML += `<p>No hay comentarios para el Post "${post.title}".</p>`;
+                            }
+                        })
+                        .catch(error => console.error('Error al obtener los comentarios del post:', error));
+                });
+            } else {
+                postList.innerHTML = `<p>No hay posts disponibles para este usuario.</p>`;
+            }
+        })
+        .catch(error => console.error('Error al obtener los posts del usuario:', error));
 }
-
-fetch('https://jsonplaceholder.typicode.com/posts')
-    .then(resp => resp.json())
-    .then(posts => {
-        const primeros5Posts = posts.slice(0, 5);
-        console.log('Primeros 5 posts:', primeros5Posts);
-    })
-    .catch(error => console.error('Error:', error));
-
-        
-            
